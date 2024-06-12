@@ -1,0 +1,70 @@
+<!-- 新网页 newpage.html -->
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>计算页面</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+				background-color: #f8f8f8;
+			}
+
+			.container {
+				max-width: 100%;
+				padding: 20px;
+				box-sizing: border-box;
+			}
+
+			h1 {
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<h1>SPAJ14X计算的参数：</h1>
+
+			<script>
+				var urlParams = new URLSearchParams(window.location.search);
+				// var url = "new_file.html?sysVol=" + sysVol + "&TrCap=" + TrCap + "&CT_main=" + CT_main+"&secCur=" + secCur;
+				var sysVol = urlParams.get('sysVol');
+				var TrCap = urlParams.get('TrCap');
+				var CT_main = urlParams.get('CT_main');
+				var secCur = urlParams.get('secCur');
+
+				// var Isn =Math.floor(parseFloat(sysVol));
+				var transCap = Math.floor(parseFloat(TrCap));
+				var CTmain = Math.floor(parseFloat(CT_main));
+				var CTSec = Math.floor(parseFloat(secCur));
+				var CT_Ratio = CTmain / CTSec;
+				var Imsn = Math.round(transCap / (1.732 * Math.floor(parseFloat(sysVol)))*100)/100;
+				var Issn = Math.round(Imsn / CT_Ratio * 100) / 100;
+				var Iratio=Imsn/CTmain;
+				var I=Math.round(1.25*Iratio*100)/100;
+                var II=4*Math.round(Iratio*100)/100;
+              
+				console.log(Imsn);
+				var content = "电压等级:" + sysVol + "kV" + "<br>" +
+					"变压器容量:" + TrCap + "kVA" + "<br>" +
+					"电流互感器变比:" + CT_main + "/" + secCur + "<br>" +
+					"一次额定电流:" + Imsn.toFixed(2) + "<br>" +
+					"二次额定电流:" + Issn + "<br>"+
+					"--------以下是继保设置参数------------------"  + "<br>"+
+					"I>:" + I + "<br>"+
+					"K:" + "0.1" + "<br>" +
+					"I>>:" + II + "<br>" +
+					"t>>:" + "0.04" + "<br>" +
+					"I0>:" + "0.2" + "<br>" +
+					"t0>:" + "1" + "<br>" +
+					"I0>>:" + "0.5" + "<br>" +
+					"t0>>:" + "0.05" + "<br>" +
+					"SGF:" + "019" + "<br>" 
+					;
+				document.write(content);
+			</script>
+		</div>
+	</body>
+</html>
