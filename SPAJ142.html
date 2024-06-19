@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>SPAJ142参数计算</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 0;
+				padding: 0;
+			}
+
+			.header {
+				background-color: #0000ff;
+				color: #fff;
+				padding: 10px;
+			}
+
+			.content {
+				padding: 10px;
+			}
+
+			.footer {
+				background-color: #0000ff;
+				color: #fff;
+				padding: 10px;
+				text-align: center;
+			}
+
+			.table {
+				width: 80%;
+				margin: 0 auto;
+				border-collapse: collapse;
+			}
+
+			.table th {
+				vertical-align: middle;
+				text-align: right;
+				padding-right: 10px;
+			}
+
+			.table td {
+				vertical-align: middle;
+			}
+
+			.label-text {
+				font-weight: bold;
+				font-family: "Microsoft YaHei", sans-serif;
+				/* 使用微软雅黑字体 */
+			}
+
+			.textbox {
+				width: 100%;
+				height: 40px;
+				padding: 10px;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				box-sizing: border-box;
+				font-size: 18px;
+				font-weight: bold;
+				/* 设置文字加粗 */
+			}
+
+			.selectbox {
+				width: 100%;
+				height: 40px;
+				padding: 10px;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				box-sizing: border-box;
+				font-size: 18px;
+				font-weight: bold;
+				/* 设置文字加粗 */
+			}
+
+			.button-container {
+				text-align: center;
+				/* 文本居中 */
+			}
+
+			.button {
+				display: inline-block;
+				padding: 15px 25px;
+				font-size: 20px;
+				font-weight: bold;
+				background-color: #007bff;
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				transition: background-color 0.3s;
+				/* 添加背景颜色过渡效果 */
+			}
+
+			.button:hover {
+				background-color: #0056b3;
+			}
+		</style>
+	</head>
+	<body>
+
+
+		<div class="header">
+			<h1>SPAJ140/2参数计算</h1>
+		</div>
+
+		<div class="content">
+			<!-- <p>这是一个包含多个带文本说明的文本输入框的适应手机屏幕的网页示例。</p> -->
+
+			<table class="table">
+				<tr>
+					<th><label for="sysVol" class="label-text">系统电压(kV)：</label></th>
+					<td><input type="text" id="sysVol" class="textbox" placeholder="系统电压..."></td>
+				</tr>
+				<tr>
+					<th><label for="TrCap" class="label-text">变压器容量(kVA)：</label></th>
+					<td><input type="text" id="TrCap" class="textbox" placeholder="变压器容量..."></td>
+				</tr>
+				<tr>
+					<th><label for="CT_main" class="label-text">CT一次额定电流(A)：</label></th>
+					<td><input type="text" id="CT_main" class="textbox" placeholder="电流互感器额定值..."></td>
+				</tr>
+				<tr>
+					<th><label for="email" class="label-text">CT二次额定电流(A)：</label></th>
+					<td><select id="Select_SEC_CUR" class="selectbox">
+							<!-- 这里可以动态生成下拉列表的选项，根据您传递的数据来赋值 -->
+							<option value="5A">5A</option>
+							<option value="1A">1A</option>
+						</select></td>
+				</tr>
+			</table>
+
+			<div class="button-container">
+				<button id="calculateButton" class="button" onclick="calculate()">计算参数</button>
+			</div>
+		</div>
+
+		<div class="footer">
+			<p>&copy; 2024 - armxu</p>
+		</div>
+
+		<script>
+			var decimalInputs = document.querySelectorAll('.textbox');
+
+			decimalInputs.forEach(function(input) {
+				input.addEventListener('input', function(event) {
+					var currentInput = event.target;
+
+					// 使用正则表达式检查输入是否为浮点数
+					var regex = /^\d*\.?\d*$/; // 浮点数
+					if (!regex.test(currentInput.value)) {
+						currentInput.value = currentInput.value.replace(/[^\d]/g, '');
+					}
+				});
+			});
+
+
+			function calculate() {
+
+				var sysVol = document.getElementById('sysVol').value;
+				var TrCap = document.getElementById('TrCap').value;
+				var CT_main = document.getElementById('CT_main').value;
+
+				var selectElement = document.getElementById("Select_SEC_CUR");
+				var secCur = selectElement.value;
+				var selectedText = selectElement.options[selectElement.selectedIndex].text;
+
+				// console.log('系统电压', password);
+				// console.log('变压器容量：', "username");
+				console.log('CT：', secCur);
+				// 将获取的数据拼接到URL中
+
+
+				var url = "new_file.html?sysVol=" + sysVol + "&TrCap=" + TrCap + "&CT_main=" + CT_main + "&secCur=" + secCur;
+
+				// // 跳转到新网页
+				window.location.href = url;
+
+			}
+		</script>
+
+	</body>
+</html>
